@@ -6,7 +6,7 @@ import { InputOTP, InputOTPSlot, InputOTPGroup, InputOTPSeparator } from "@/comp
 import { useState } from "react";
 
 export default function Home() {
-  const [value, setValue] = useState("011117355556")
+  const [value, setValue] = useState("")
   const [results, setResults] = useState<CollisionCounterGroup>()
 
   function handleSubmit() {
