@@ -1,5 +1,6 @@
 "use client"
 
+import { ResultGroup } from "@/components/result-group";
 import { Button } from "@/components/ui/button";
 import { InputOTP, InputOTPSlot, InputOTPGroup, InputOTPSeparator } from "@/components/ui/input-otp";
 import { useState } from "react";
@@ -88,44 +89,18 @@ export default function Home() {
           <div className="space-y-4">
             <h1 className="font-bold text-xl">resultados</h1>
             {results[6] &&
-              <div className="space-y-2">
-                <h2 className="font-bold text-lg">
-                  {results[6].length} sena
-                </h2>
-                {results[6]?.map((item, idx) => (
-                  <h3 key={idx}>
-                    {item.join(" ")}
-                  </h3>
-                ))}
-              </div>
+              <ResultGroup label="sena" results={results[6]} />
             }
             {results[5] &&
-              <div className="space-y-2">
-                <h2 className="font-bold text-lg">
-                  {results[5].length} quina
-                </h2>
-                {results[5]?.map((item, idx) => (
-                  <h3 key={idx}>
-                    {item.join(" ")}
-                  </h3>
-                ))}
-              </div>
+              <ResultGroup label="quina" results={results[5]} />
             }
             {results[4] &&
-              <div className="space-y-2">
-                <h2 className="font-bold text-lg">
-                  {results[5].length} quadra
-                </h2>
-                {results[4]?.map((item, idx) => (
-                  <h3 key={idx}>
-                    {item.join(" ")}
-                  </h3>
-                ))}
-              </div>
+              <ResultGroup label="quadra" results={results[4]} />
             }
           </div>
         }
-        <hr className="border-2 rounded-md" />
+
+        <hr className="border-1 rounded-md" />
 
         <div className="space-y-2">
           <h2 className="font-bold">
