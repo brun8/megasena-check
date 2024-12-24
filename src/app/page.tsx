@@ -2,17 +2,18 @@
 
 import { ResultGroup } from "@/components/result-group";
 import { Button } from "@/components/ui/button";
-import { InputOTP, InputOTPSlot, InputOTPGroup, InputOTPSeparator } from "@/components/ui/input-otp";
-import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { FormEvent, useState } from "react";
 
 export default function Home() {
-  const [value, setValue] = useState("")
   const [results, setResults] = useState<CollisionCounterGroup>()
+  const [value, setValue] = useState("")
 
-  function handleSubmit() {
-    if (value.length !== 12) {
-      return
-    }
+  const buttonDisabled = value.length !== 12
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
     const formattedValue = formatWithSpaces(value)
     const valueArr = convertToNums(formattedValue)
 
@@ -24,70 +25,47 @@ export default function Home() {
   }
 
   return (
-    <main
-      className="mt-24 flex flex-col items-center"
-    >
+    <main className="mx-auto w-[90%] max-w-xl mt-10 md:mt-24 flex flex-col">
       <div
         className="space-y-5"
       >
-        <div
+        <form
           className="space-y-4"
+          onSubmit={handleSubmit}
         >
-          <InputOTP maxLength={12}
-            value={value}
-            onChange={setValue}
+          <h1
+            className="text-xl font-bold"
           >
-            <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-            </InputOTPGroup>
-            <InputOTPSeparator />
-            <InputOTPGroup>
-              <InputOTPSlot index={2} />
-              <InputOTPSlot index={3} />
-            </InputOTPGroup>
-            <InputOTPSeparator />
-            <InputOTPGroup>
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
-            </InputOTPGroup>
-            <InputOTPSeparator />
-            <InputOTPGroup>
-              <InputOTPSlot index={6} />
-              <InputOTPSlot index={7} />
-            </InputOTPGroup>
-            <InputOTPSeparator />
-            <InputOTPGroup>
-              <InputOTPSlot index={8} />
-              <InputOTPSlot index={9} />
-            </InputOTPGroup>
-            <InputOTPSeparator />
-            <InputOTPGroup>
-              <InputOTPSlot index={10} />
-              <InputOTPSlot index={11} />
-            </InputOTPGroup>
-          </InputOTP>
+            resultado
+          </h1>
+          <Input
+            placeholder="Ex: 01 02 03 04 05 06"
+            value={formatWithSpaces(value)}
+            maxLength={17}
+            onChange={(event) => {
+              console.log(value)
+              const digits = getDigits(event.target.value)
+              setValue(digits.trim())
+            }}
+          />
 
-          <div className="space-y-1">
-            <p className="text-zinc-600">
-              se o número for menor que 10, colocar o 0 na frente
-            </p>
-            <p className="text-zinc-600">
-              exemplo: 02 04 08 16 32 40
-            </p>
-          </div>
-        </div>
+          <p className="text-zinc-600">
+            se o número for menor que 10, colocar o 0 na frente
+          </p>
+          <Button
+            type="submit"
+            size="lg"
+            className="font-semibold mx-auto"
+            disabled={buttonDisabled}
+          >
+            enviar
+          </Button>
+        </form>
 
-        <Button onClick={handleSubmit}
-          size="lg"
-          className="font-semibold mx-auto"
-        >
-          enviar
-        </Button>
 
         {results &&
           <div className="space-y-4">
-            <h1 className="font-bold text-xl">resultados</h1>
+            <h1 className="font-bold text-xl">acertos</h1>
             {results[6] &&
               <ResultGroup label="sena" results={results[6]} />
             }
@@ -96,6 +74,9 @@ export default function Home() {
             }
             {results[4] &&
               <ResultGroup label="quadra" results={results[4]} />
+            }
+            {(!results[4] && !results[5] && !results[6]) &&
+              <p>nada</p>
             }
           </div>
         }
@@ -114,7 +95,7 @@ export default function Home() {
           }
         </div>
       </div>
-    </main>
+    </main >
   );
 }
 
@@ -195,7 +176,11 @@ function groupCollisions(gameResult: number[]) {
   return res
 }
 
-const formatWithSpaces = (value: string) => {
+function getDigits(value: string) {
+  return value.replace(/\D/g, '')
+}
+
+function formatWithSpaces(value: string) {
   return value.replace(/(\d{2})/g, '$1 ').trim();
 }
 
