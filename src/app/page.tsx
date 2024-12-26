@@ -1,6 +1,7 @@
 "use client"
 
 import { ResultGroup } from "@/components/result-group";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormEvent, useState } from "react";
@@ -84,15 +85,23 @@ export default function Home() {
         <hr className="border-1 rounded-md" />
 
         <div className="space-y-2">
-          <h2 className="font-bold">
-            jogos:
-          </h2>
-          {jogosArr.map((jogo, idx) => (
-            <h3 key={idx}>
-              {jogo.join(" ")}
-            </h3>
-          ))
-          }
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1" className="border-0">
+              <AccordionTrigger className="font-bold hover:no-underline">
+                jogos:
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-1">
+                  {jogosArr.map((jogo, idx) => (
+                    <p key={idx}>
+                      {jogo.join(" ")}
+                    </p>
+                  ))
+                  }
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </main >
