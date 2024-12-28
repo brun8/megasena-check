@@ -143,9 +143,9 @@ const jogos = `
 
 const jogosArr = jogos.split("\n").map((elem) => elem.trim().split(" ")).filter((l) => l.length >= 6)
 
-function convertToNums(str: string) {
-  return str.trim().split(" ").map(Number)
-}
+// function convertToNums(str: string) {
+//   return str.trim().split(" ").map(Number)
+// }
 
 function countCollisions(a: string[], b: string[]) {
   let count = 0
