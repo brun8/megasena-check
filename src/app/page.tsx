@@ -16,7 +16,7 @@ export default function Home() {
     e.preventDefault()
 
     const formattedValue = formatWithSpaces(value)
-    const valueArr = convertToNums(formattedValue)
+    const valueArr = formattedValue.split(" ")
 
     setResults(groupCollisions(valueArr))
   }
@@ -141,13 +141,13 @@ const jogos = `
 41 42 46 51 55 58
 `;
 
-const jogosArr = jogos.split("\n").map(convertToNums).filter((l) => l.length >= 6)
+const jogosArr = jogos.split("\n").map((elem) => elem.trim().split(" ")).filter((l) => l.length >= 6)
 
 function convertToNums(str: string) {
   return str.trim().split(" ").map(Number)
 }
 
-function countCollisions(a: number[], b: number[]) {
+function countCollisions(a: string[], b: string[]) {
   let count = 0
   a.forEach((num) => {
     if (b.indexOf(num) !== -1) {
@@ -157,9 +157,9 @@ function countCollisions(a: number[], b: number[]) {
   return count
 }
 
-type CollisionCounterGroup = Record<number, number[][]>
+type CollisionCounterGroup = Record<number, string[][]>
 
-function groupCollisions(gameResult: number[]) {
+function groupCollisions(gameResult: string[]) {
   const res = jogosArr.reduce((acc, cur) => {
     const count = countCollisions(cur, gameResult);
     if (!acc[count]) {

@@ -1,4 +1,4 @@
-export function ResultGroup({ label, results }: { label: string, results: number[][] }) {
+export function ResultGroup({ label, results }: { label: string, results: string[][] }) {
   return (
     <div className="space-y-2">
       <h2 className="font-bold text-lg">
