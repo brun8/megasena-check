@@ -10,7 +10,8 @@ export default function Home() {
   const [results, setResults] = useState<CollisionCounterGroup>()
   const [value, setValue] = useState("")
 
-  const buttonDisabled = value.length !== 12
+  // const buttonDisabled = value.length !== 12
+  const buttonDisabled = false
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -42,7 +43,7 @@ export default function Home() {
           <Input
             placeholder="Ex: 01 02 03 04 05 06"
             value={formatWithSpaces(value)}
-            maxLength={17}
+            maxLength={44}
             onChange={(event) => {
               console.log(value)
               const digits = getDigits(event.target.value)
@@ -63,9 +64,24 @@ export default function Home() {
           </Button>
         </form>
 
-
+        {/* lotofacil da independencia */}
         {results &&
           <div className="space-y-4">
+            <h1 className="font-bold text-xl">acertos</h1>
+            {results[15] &&
+              <ResultGroup label="15" results={results[15]} />
+            }
+            {results[14] &&
+              <ResultGroup label="14" results={results[14]} />
+            }
+            {results[13] &&
+              <ResultGroup label="13" results={results[13]} />
+            }
+          </div>
+        }
+
+        {results &&
+          <div className="space-y-4 hidden">
             <h1 className="font-bold text-xl">acertos</h1>
             {results[6] &&
               <ResultGroup label="sena" results={results[6]} />
@@ -109,28 +125,13 @@ export default function Home() {
 }
 
 const jogos = `
-10 20 23 26 33 34 37 53
-01 09 16 18 22 50 60
-02 03 09 33 34 36 39
-04 07 09 21 36 42 54
-06 11 16 18 29 32 44
-07 13 32 33 39 40 60
-09 19 21 32 36 48 51
-02 03 05 20 21 26
-02 03 11 18 28 56
-02 06 18 27 46 55
-02 43 44 46 50 56
-04 08 14 21 23 52
-04 08 18 26 29 45
-04 13 20 28 32 38
-06 20 23 41 46 52
-09 19 30 41 44 53
-10 15 31 34 51 56
-11 34 37 44 53 59
-16 17 31 40 43 56
-17 26 35 40 41 57
-20 23 34 43 45 55
-26 33 42 43 54 59
+01 02 03 04 05 06 07 08 09 10 11 12 13 14 15
+01 02 03 09 10 11 12 13 14 15 16 17 18 19 20
+06 07 08 09 10 11 12 13 14 15 16 17 18 19 20
+04 05 06 07 08 09 10 11 12 13 14 15 16 17 18
+02 03 04 05 06 07 08 09 10 11 12 13 14 15 16
+01 02 03 04 05 08 09 10 12 13 14 17 18 19 20
+01 02 03 04 05 07 08 09 11 12 14 15 17 19 20
 `;
 
 const jogosArr = jogos.split("\n").map((elem) => elem.trim().split(" ")).filter((l) => l.length >= 6)

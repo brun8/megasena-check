@@ -2,7 +2,9 @@ export function ResultGroup({ label, results }: { label: string, results: string
   return (
     <div className="space-y-2">
       <h2 className="font-bold text-lg">
-        {results.length}{" "}
+        <span className="hidden">
+          {results.length}{" "}
+        </span>
         {results.length > 1
           ? `${label}s`
           : label
