@@ -5,6 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// 0800 1040104
 export function getApostas() {
   const divs = document.querySelectorAll("div.numeros-volante")
   const apostas = Array.from(divs).map((div) =>
