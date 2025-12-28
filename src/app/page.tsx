@@ -44,6 +44,7 @@ export default function Home() {
             value={formatWithSpaces(value)}
             maxLength={17}
             onChange={(event) => {
+              console.log(value)
               const digits = getDigits(event.target.value)
               setValue(digits.trim())
             }}
