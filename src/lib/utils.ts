@@ -13,3 +13,12 @@ export function getApostas() {
 
   console.log(apostas.join("\n"))
 }
+
+export async function getResult(concurso: string) {
+  const res = await fetch(`https://servicebus2.caixa.gov.br/portaldeloterias/api/lotofacil/${concurso}`)
+  console.log(res)
+  if (res.status === 200) {
+    const json = await res.json()
+    return json
+  }
+}
